@@ -22,19 +22,19 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
-    {
-        return view('front.index');
-    }
+//    public function index()
+//    {
+//        return view('front.index');
+//    }
 
     /**
      * Show the application dashboard.
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function adminHome()
+    public function adminHome(): \Illuminate\Contracts\Support\Renderable
     {
-        return view('dashboard');
+        return view('layouts.dashLayout');
     }
 
 }

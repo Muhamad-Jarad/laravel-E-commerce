@@ -3,6 +3,8 @@
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,11 +23,24 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/admin', [HomeController::class, 'adminHome'])->name('admin.home')->middleware('is_admin');
 
-Route::get('admin/home', [HomeController::class, 'adminHome'])->name('admin.home')->middleware('is_admin');
 
-Route::get('/shop', function () {
-    return view('front.shop');
-})->name('front-shop');
+/*
+Verb          Path                        Action  Route Name
+
+GET           /users                      index   users.index
+GET           /users/create               create  users.create
+POST          /users                      store   users.store
+GET           /users/{user}               show    users.show
+GET           /users/{user}/edit          edit    users.edit
+PUT|PATCH     /users/{user}               update  users.update
+DELETE        /users/{user}               destroy users.destroy
+
+*/
+Route::prefix('admin')->group(function () {
+    Route::resource('categories',CategoryController::class);
+    Route::resource('products',ProductController::class);
+});
+
 
