@@ -13,10 +13,6 @@ class CategoryController extends Controller
         return view('category.index',[
             'categories'=>$categories
         ]);
-
-//        $data = User::all();
-//        //$data = login::orderBy('created_at', 'desc')->get();
-//        return view('AdminPanel', ['data' => $data]);
     }
     public function create()
     {
@@ -50,10 +46,10 @@ class CategoryController extends Controller
 //        return view('categories.index',compact('category'));
 //    }
 
-    public function edit(Category $category)
-    {
-        return view('categories.edit',compact('category'));
-    }
+//    public function edit(Category $category)
+//    {
+//        return view('categories.edit',compact('category'));
+//    }
 
     public function update(Request $request, $id)
     {
@@ -69,20 +65,7 @@ class CategoryController extends Controller
 
         return redirect()->route('categories.index');
 
-        // Validation for required fields (and using some regex to validate our numeric value)
-//        $request->validate([
-//            'stock_name'=>'required',
-//            'ticket'=>'required',
-//            'value'=>'required|max:10|regex:/^-?[0-9]+(?:\.[0-9]{1,2})?$/'
-//        ]);
-//        $stock = Stock::find($id);
-//        // Getting values from the blade template form
-//        $stock->stock_name =  $request->get('stock_name');
-//        $stock->ticket = $request->get('ticket');
-//        $stock->value = $request->get('value');
-//        $stock->save();
-//
-//        return redirect('/stocks')->with('success', 'Stock updated.');
+
 
     }
 

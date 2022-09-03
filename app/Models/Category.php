@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @property mixed $category_name
  * @method static find($id)
+ * @method static paginate(int $int)
  */
 class Category extends Model
 {
@@ -27,8 +28,9 @@ class Category extends Model
     {
     }
 
-    public function products() {
-        return $this->hasMany(App\Model\Product::class);
+    public function products(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(App\Model\Product::class,'category_id');
     }
 
 }

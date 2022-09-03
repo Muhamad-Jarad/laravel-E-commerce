@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -17,9 +18,12 @@ use App\Http\Controllers\ProductController;
 |
 */
 
-Route::get('/', function () {
-    return view('front.index');
-})->name('main');
+/* test Route */
+Route::get('/test',function (){
+    return view('test');
+});
+
+Route::get('/', [Controller::class,'index'])->name('main');
 
 Auth::routes();
 
@@ -42,5 +46,3 @@ Route::prefix('admin')->group(function () {
     Route::resource('categories',CategoryController::class);
     Route::resource('products',ProductController::class);
 });
-
-

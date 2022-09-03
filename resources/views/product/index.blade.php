@@ -16,13 +16,15 @@
                         </th>
                         <th class="">Id</th>
                         <th class="min-width">Name</th>
+                        <th class="min-width">Price</th>
+                        <th class="min-width">Category</th>
                         <th>Actions</th>
 
                     </tr>
                     </thead>
                     <tbody>
                     {{--                    @if (isset($categories))--}}
-                    @foreach($categories as $item)
+                    @foreach($products as $item)
                         <tr>
                             <td class="align-middle">
                                 <div
@@ -33,7 +35,10 @@
                             </td>
 
                             <td>{{$item->id}}</td>
-                            <td>{{$item->category_name}}</td>
+                            <td>{{$item->product_name}}</td>
+                            <td>{{$item->product_price}}</td>
+                            <td>{{$item->category_id}}</td>
+{{--                            <td>{{$item->category()->category_name}}</td>--}}
                             <td class="text-center align-middle">
                                 <div class="btn-group align-top">
                                     <button class="btn btn-sm btn-outline-secondary badge" type="button"
@@ -43,7 +48,7 @@
                                         <div class="modal-dialog modal-lg" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title">Edit Category</h5>
+                                                    <h5 class="modal-title">Edit Product</h5>
                                                     <button type="button" class="close" data-dismiss="modal">
                                                         <span aria-hidden="true">×</span>
                                                     </button>
@@ -51,18 +56,39 @@
 
                                                 <div class="modal-body">
                                                     <div class="py-1">
-                                                        <form action="{{route('categories.update',$item->id)}}" method="POST">
+                                                        <form action="{{route('products.update',$item->id)}}" method="POST">
                                                             @csrf
                                                             @method('PUT')
 
                                                             <div class="form-group">
-                                                                <input id="" type="text" class="form-control" name="category_name" value="{{$item->category_name}}" required
-                                                                       placeholder="Category name" autofocus>
+                                                                <input id="" type="text" class="form-control" value="{{$item->product_name}}" name="product_name" required
+                                                                       placeholder="Product name" autofocus>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <input id="" type="text" class="form-control" value="{{$item->product_price}}" name="product_price" required
+                                                                       placeholder="Product price" autofocus>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="image">Choose product image:</label>
+                                                                <input id="image" type="file" class="form-control" value="{{$item->product_image}}" name="product_image" required
+                                                                       placeholder="Product image" autofocus>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="browser">Choose your browser from the list:</label>
+                                                                <input list="browsers" name="category_id" id="browser">
+
+                                                                <datalist id="browsers">
+                                                                    @foreach($categories as $c)
+                                                                        <option value="{{$c->id}}">{{$c->category_name}}</option>
+                                                                    @endforeach
+
+                                                                </datalist>
                                                             </div>
 
 
+
                                                             <div class="form-group">
-                                                                <button type="submit" class="btn btn-primary btn-block">Save Data</button>
+                                                                <button type="submit" class="btn btn-primary btn-block">Save</button>
                                                             </div>
                                                         </form>
 
@@ -71,7 +97,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <form action="{{route('categories.destroy', $item->id)}}" method="POST">
+                                    <form action="{{route('products.destroy', $item->id)}}" method="POST">
                                         @csrf
                                         @method('DELETE')
 
@@ -82,7 +108,7 @@
                             </td>
                         </tr>
                     @endforeach
-                    {{--                    @endif--}}
+
                     </tbody>
                 </table>
             </div>
@@ -109,7 +135,7 @@
             <div class="card-body">
                 <div class="text-center px-xl-3">
                     <button class="btn btn-success btn-block" type="button" data-toggle="modal"
-                            data-target="#user-form-modal">New Category
+                            data-target="#user-form-modal">New Product
                     </button>
                 </div>
                 <hr class="my-3">
@@ -169,26 +195,47 @@
         </div>
     </div>
 @endsection
-{{--section create & edit--}}
+{{--section create & --}}
 @section('content3')
     <div class="modal fade" role="dialog" tabindex="-1" id="user-form-modal">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Create Category</h5>
+                    <h5 class="modal-title">Create Product</h5>
                     <button type="button" class="close" data-dismiss="modal">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <div class="py-1">
-                        <form action="{{route('categories.store')}}" method="POST">
+                        <form action="{{route('products.store')}}" method="POST">
                             @csrf
 
                             <div class="form-group">
-                                <input id="" type="text" class="form-control" name="category_name" required
-                                       placeholder="Category name" autofocus>
+                                <input id="" type="text" class="form-control" name="product_name" required
+                                       placeholder="Product name" autofocus>
                             </div>
+                            <div class="form-group">
+                                <input id="" type="text" class="form-control" name="product_price" required
+                                       placeholder="Product price" autofocus>
+                            </div>
+                            <div class="form-group">
+                                <label for="image">Choose product image:</label>
+                                <input id="image" type="file" class="form-control" name="product_image" required
+                                       placeholder="Product image" autofocus>
+                            </div>
+                            <div class="form-group">
+                                <label for="browser">Choose your browser from the list:</label>
+                                <input list="browsers" name="category_id" id="browser">
+
+                                <datalist id="browsers">
+                                    @foreach($categories as $c)
+                                        <option value="{{$c->id}}">{{$c->category_name}}</option>
+                                    @endforeach
+
+                                </datalist>
+                            </div>
+
 
 
                             <div class="form-group">
